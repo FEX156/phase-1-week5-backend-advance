@@ -1,11 +1,33 @@
+import { AuthServices } from "./services";
+import { db } from "../../db";
 import Elysia from "elysia";
+import { createUserRequest } from "./model";
 
-export const authController = new Elysia({ prefix: "/auth" }).get(
-  "/users",
-  async () => {
+const auth = new AuthServices(db);
+
+export const authController = new Elysia({ prefix: "/auth" })
+  .get(
+    "/test",
+    async () => {
+      return {
+        message: "Halo dari Elysia!",
+        status: "success",
+      };
+    }, //scheama
+  )
+  .get("/users", async () => {
+    const users = await auth.selectUser();
     return {
-      message: "Halo dari Elysia!",
-      status: "success",
+      success: true,
+      data: users,
     };
-  }, //scheama
-);
+  })
+  .post(
+    "/users",
+    async ({ body }) => {
+      const users = await auth.createUser();
+    },
+    {
+      body: createUserRequest,
+    },
+  );

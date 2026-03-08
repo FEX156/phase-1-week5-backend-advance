@@ -18,6 +18,10 @@ This project was created using `bun init` in bun v1.3.9. [Bun](https://bun.com) 
 
 Bun + Elysia, drizzle ORM, reactjs,
 
+## Relational Diagram
+
+![ERD-ws-chat-app](./public/assets/db-diagram.jpg)
+
 ## Endpoint
 
 ### AuthApi

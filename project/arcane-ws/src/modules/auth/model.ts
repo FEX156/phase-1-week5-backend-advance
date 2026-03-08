@@ -1,12 +1,16 @@
 import { t } from "elysia";
+import { createInsertSchema } from "drizzle-typebox";
+import { usersTable } from "../../db/schemas";
 
-export const AuthModel = {
-  registerBody: t.Object({
-    username: t.String({
-      description: "username for unique identifier in chat",
-      minLength: 1,
-      maxLength: 12,
-    }),
-    email: t.String({ format: "email", minLength: 1 }),
-  }),
-};
+export const _users = createInsertSchema(usersTable, {
+  email: t.String({ format: "email" }),
+});
+export const createUserRequest = t.Omit(_users, [
+  "id",
+  "lastSeen",
+  "token",
+  "createdAt",
+  "updatedAt",
+]);
+
+// export class AuthDto {}

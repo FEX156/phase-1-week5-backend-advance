@@ -8,7 +8,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/auth/users")
+    fetch("/auth/test")
       .then((res) => res.json())
       .then((json: Welcome) => {
         setData(json);
