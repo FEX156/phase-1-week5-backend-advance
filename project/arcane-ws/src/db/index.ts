@@ -17,3 +17,5 @@ export const getDb = () => {
 };
 
 export const db = getDb();
+
+export type dbType = typeof db;
