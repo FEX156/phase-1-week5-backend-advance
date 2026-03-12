@@ -1,6 +1,7 @@
-import { db, type dbType } from "../../db";
 import { eq } from "drizzle-orm";
+import { db, type dbType } from "../../db";
 import { usersTable } from "../../db/schemas";
+import { ResponseError } from "../../errors/customError";
 import {
   type RegisterType,
   type LoginType,
@@ -15,11 +16,12 @@ export class AuthServices {
     const user = await db.query.usersTable.findFirst({
       where: (users, { eq }) => eq(users.email, request.email),
     });
+
     const isValid =
       user && (await Bun.password.verify(request.password, user.password!));
 
     if (!isValid) {
-      throw Error("invalid email and password");
+      throw new ResponseError(401, "Invalid Credentials");
     }
 
     return user;
@@ -54,6 +56,19 @@ export class AuthServices {
 
     return new LoginResponseDto({ accessToken, refreshToken });
   }
-  public async logout() {}
-  public async getRefreshToken() {}
+
+  public async deleteSession(userId: string) {
+    await this.db
+      .update(usersTable)
+      .set({ token: null })
+      .where(eq(usersTable.id, userId));
+  }
+
+  public async newRefreshToken(
+    payload: { id: string; username: string },
+    refreshJwt: any,
+  ) {
+    const accessToken = await refreshJwt.sign(payload);
+    return { accessToken };
+  }
 }

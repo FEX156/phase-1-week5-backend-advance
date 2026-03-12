@@ -2,9 +2,11 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { staticPlugin } from "@elysiajs/static";
 import { authController } from "./modules/auth";
+import { errorGlobalPlugin } from "./plugin/error.plugin";
 
 const app = new Elysia()
   .use(cors())
+  .use(errorGlobalPlugin)
   .use(authController)
   .use(await staticPlugin({ prefix: "/" }))
   .listen(3000);

@@ -1,18 +1,13 @@
 import Elysia from "elysia";
-import { jwt } from "@elysiajs/jwt";
-import { AuthServices } from "./services";
 import { db } from "../../db";
+import { AuthServices } from "./services";
+import { authCore, verifyRefresh } from "../../plugin/auth.plugin";
 import { registerModel, loginModel } from "./model";
 
 const auth = new AuthServices(db);
 
 export const authController = new Elysia({ prefix: "/auth" })
-  .use(
-    jwt({ name: "accessJwt", secret: process.env.ACCESS_SECRET!, exp: "15m" }),
-  )
-  .use(
-    jwt({ name: "refreshJwt", secret: process.env.REFRESH_SECRET!, exp: "3d" }),
-  )
+  .use(authCore)
   .post(
     "/register",
     async ({ body, set }) => {
@@ -45,5 +40,17 @@ export const authController = new Elysia({ prefix: "/auth" })
       body: loginModel.reqBody,
     },
   )
-  .post("/logout", ({ body, accessJwt, refreshJwt }) => true)
-  .post("/refresh", ({ body, refreshJwt }) => true);
+  .group("/session", (app) =>
+    app
+      .use(verifyRefresh)
+      .post("/logout", async ({ refreshUser, set }) => {
+        await auth.deleteSession(refreshUser.id);
+        set.status = 200;
+        return { succes: true, data: null };
+      })
+      .post("/refresh", async ({ refreshUser, refreshJwt, set }) => {
+        const token = await auth.newRefreshToken(refreshUser, refreshJwt);
+        set.status = 200;
+        return { succes: true, data: token };
+      }),
+  );

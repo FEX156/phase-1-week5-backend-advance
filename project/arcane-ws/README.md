@@ -28,8 +28,8 @@ Bun + Elysia, drizzle ORM, reactjs,
 
 - post => /auth/register
 - post => /auth/login
-- patch => /auth/logout
-- post => /auth/refresh
+- patch => /auth/session/logout
+- post => /auth/session/refresh
 
 ### UserApi
 
