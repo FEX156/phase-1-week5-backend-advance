@@ -15,3 +15,5 @@ const app = new Elysia()
 console.log(`🚀 Server running at http://localhost:3000/`);
 console.log(`📚 Swagger documentation at http://localhost:3000/swagger`);
 console.log(`🔌 WebSocket endpoint at ws://localhost:3000/ws`);
+
+export default app;

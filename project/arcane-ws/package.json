@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production bun --env-file=.env  dist/index.js",
     "db:generate:dev": "bun --env-file=.env.test.local drizzle-kit generate",
     "db:migrate:dev": "bun --env-file=.env.test.local drizzle-kit migrate",
-    "test": "bun test"
+    "test": "bun --env-file=.env.test.local test"
   },
   "devDependencies": {
     "@types/bun": "^1.3.10",

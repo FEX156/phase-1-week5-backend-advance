@@ -5,12 +5,13 @@ import { ResponseError } from "../../errors/customError";
 import {
   type RegisterType,
   type LoginType,
+  type JwtSigner,
   RegisterResponseDto,
   LoginResponseDto,
 } from "./model";
 
 export class AuthServices {
-  constructor(private db: dbType) {}
+  constructor(private db: dbType | any) {}
 
   private async validateCredential(request: LoginType["reqBody"]) {
     const user = await db.query.usersTable.findFirst({
@@ -40,8 +41,8 @@ export class AuthServices {
 
   public async login(
     request: LoginType["reqBody"],
-    accessJwt: any,
-    refreshJwt: any,
+    accessJwt: JwtSigner,
+    refreshJwt: JwtSigner,
   ) {
     const validUser = await this.validateCredential(request);
     const payload = { id: validUser.id, username: validUser.username };
@@ -66,7 +67,7 @@ export class AuthServices {
 
   public async newRefreshToken(
     payload: { id: string; username: string },
-    refreshJwt: any,
+    refreshJwt: JwtSigner,
   ) {
     const accessToken = await refreshJwt.sign(payload);
     return { accessToken };

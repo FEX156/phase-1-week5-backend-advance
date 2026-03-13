@@ -7,7 +7,7 @@ export const authCore = new Elysia({ name: "auth.core" })
     jwt({
       name: "accessJwt",
       secret: process.env.ACCESS_SECRET!,
-      exp: "15m",
+      exp: process.env.ACCESS_DURATION!,
       schema: t.Object({
         id: t.String(),
         username: t.String(),
@@ -18,7 +18,7 @@ export const authCore = new Elysia({ name: "auth.core" })
     jwt({
       name: "refreshJwt",
       secret: process.env.REFRESH_SECRET!,
-      exp: "3d",
+      exp: process.env.REFRESH_DURATION!,
       schema: t.Object({
         id: t.String(),
         username: t.String(),

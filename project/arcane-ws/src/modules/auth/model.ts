@@ -56,6 +56,6 @@ export type LoginType = {
   [K in keyof typeof loginModel]: UnwrapSchema<(typeof loginModel)[K]>;
 };
 
-export const errorLiterals = {
-  invalidType: t.Literal("invalid type field input"),
-};
+export interface JwtSigner {
+  sign(payload: object): Promise<string>;
+}
