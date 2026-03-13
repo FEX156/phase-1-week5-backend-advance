@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
+import { StrictMode } from "react";
+import { useState, useEffect } from "react";
+import Navbar from "../libs/components/Navbar";
+import "@public/global.css";
 
 type Welcome = { message: string; status: string };
 
@@ -8,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/auth/users")
+    fetch("/test")
       .then((res) => res.json())
       .then((json: Welcome) => {
         setData(json);
@@ -22,6 +25,7 @@ function App() {
 
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
+      <Navbar />
       <h1>React + Elysia Test</h1>
       <hr />
       {loading ? (
@@ -45,5 +49,8 @@ function App() {
   );
 }
 
-const root = createRoot(document.getElementById("root")!);
-root.render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
