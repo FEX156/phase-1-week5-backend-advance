@@ -20,7 +20,7 @@ Bun + Elysia, drizzle ORM, reactjs,
 
 ## Relational Diagram
 
-![ERD-ws-chat-app](./public/assets/db-diagram.jpg)
+![ERD-ws-chat-app](./assets/db-diagram.jpg)
 
 ## Endpoint
 

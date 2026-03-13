@@ -3,13 +3,11 @@ import { createInsertSchema } from "drizzle-typebox";
 import { usersTable } from "../../db/schemas";
 import type { UnwrapSchema } from "elysia";
 
-export class RegisterResponseDto<
-  T extends { id: any; username: any; email: any; createdAt: any },
-> {
-  id: string;
+export class RegisterResponseDto<T extends RegisterType["resBody"]["data"]> {
+  id: string | undefined;
   username: string;
   email: string;
-  createdAt: Date | string;
+  createdAt: Date | null | undefined;
   constructor(data: T) {
     this.id = data.id;
     this.username = data.username;
@@ -35,7 +33,11 @@ const baseUser = createInsertSchema(usersTable, {
 
 export const registerModel = {
   reqBody: t.Pick(baseUser, ["username", "password", "email"]),
-  resBody: t.Pick(baseUser, ["id", "username", "email", "createdAt"]),
+  resBody: t.Object({
+    succes: t.Boolean(),
+    message: t.String(),
+    data: t.Pick(baseUser, ["id", "username", "email", "createdAt"]),
+  }),
   resInvalid: t.Literal("invalid type field input"),
 };
 

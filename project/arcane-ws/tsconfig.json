@@ -7,12 +7,16 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
+    "paths": {
+      "@public/*": ["./public/*"]
+    },
 
     // Bundler mode
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
+    "noUncheckedSideEffectImports": false,
 
     // Best practices
     "strict": true,

@@ -13,10 +13,11 @@ export const authController = new Elysia({ prefix: "/auth" })
     async ({ body, set }) => {
       const users = await auth.register(body);
       set.status = 201;
-      return { succes: true, data: users };
+      return { succes: true, message: "User Created", data: users };
     },
     {
       body: registerModel.reqBody,
+      response: registerModel.resBody,
     },
   )
   .post(
