@@ -13,6 +13,7 @@ export const errorGlobalPlugin = new Elysia()
           errors: error.details,
         };
       case "INTERNAL_SERVER_ERROR":
+        set.status = 500;
         return { success: false, message: error.message };
       case "VALIDATION":
         return {
@@ -23,5 +24,8 @@ export const errorGlobalPlugin = new Elysia()
             detail: e.summary,
           })),
         };
+      default:
+        set.status = 500;
+        return { success: false, message: "Internal Server Error" };
     }
   });

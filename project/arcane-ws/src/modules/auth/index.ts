@@ -49,8 +49,8 @@ export const authController = new Elysia({ prefix: "/auth" })
         set.status = 200;
         return { succes: true, data: null };
       })
-      .post("/refresh", async ({ refreshUser, refreshJwt, set }) => {
-        const token = await auth.newRefreshToken(refreshUser, refreshJwt);
+      .post("/refresh", async ({ refreshUser, accessJwt, set }) => {
+        const token = await auth.newRefreshToken(refreshUser, accessJwt);
         set.status = 200;
         return { succes: true, data: token };
       }),

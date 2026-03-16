@@ -25,7 +25,7 @@ export class LoginResponseDto {
   }
 }
 
-const baseUser = createInsertSchema(usersTable, {
+export const baseUser = createInsertSchema(usersTable, {
   email: t.String({ format: "email", minLength: 5, maxLength: 255 }),
   username: t.String({ minLength: 3, maxLength: 10 }),
   password: t.String({ minLength: 6, maxLength: 100 }),
