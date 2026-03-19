@@ -24,6 +24,10 @@ export const errorGlobalPlugin = new Elysia()
             detail: e.summary,
           })),
         };
+      case "NOT_FOUND":
+        set.status = error.status;
+        return { success: false, message: error.message };
+
       default:
         set.status = 500;
         return { success: false, message: "Internal Server Error" };

@@ -28,7 +28,7 @@ export const authCore = new Elysia({ name: "auth.core" })
 
 export const verifyAccess = new Elysia()
   .use(authCore)
-  .derive({ as: "scoped" }, async ({ headers, accessJwt, set }) => {
+  .derive({ as: "scoped" }, async ({ headers, accessJwt }) => {
     const auth = headers.authorization;
 
     const token = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
@@ -44,7 +44,7 @@ export const verifyAccess = new Elysia()
     }
 
     return {
-      user: payload,
+      user: { id: payload.id, username: payload.username },
     };
   });
 
