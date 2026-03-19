@@ -15,6 +15,13 @@
       "when": 1773044785010,
       "tag": "0001_dry_major_mapleleaf",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773490103729,
+      "tag": "0002_third_vanisher",
+      "breakpoints": true
     }
   ]
 }

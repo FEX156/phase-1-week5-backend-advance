@@ -1,4 +1,4 @@
-# ArcaneQuest - Fullstack ChatApp
+# ArcaneQuest - websocket ChatApp
 
 To install dependencies:
 
@@ -16,7 +16,7 @@ This project was created using `bun init` in bun v1.3.9. [Bun](https://bun.com) 
 
 ## TechStack
 
-Bun + Elysia, Drizzle ORM, Reactjs
+Bun + Elysia, Drizzle ORM
 
 ## Relational Diagram
 
@@ -26,28 +26,28 @@ Bun + Elysia, Drizzle ORM, Reactjs
 
 ### AuthApi
 
-- post => /auth/register
-- post => /auth/login
-- patch => /auth/session/logout
-- post => /auth/session/refresh
+- post => v1/auth/register
+- post => v1/auth/login
+- patch => v1/auth/session/logout
+- post => v1/auth/session/refresh
 
 ### UserApi
 
-- get => /users
-- patch => /users
-- delete => /users
-- get => /users/active
+- get => v1/users
+- patch => v1/users
+- delete => v1/users
+- get => v1/users/active
 
 ### ChatApi
 
-- get => /chat/
-- post => /chat/
-- patch => /chat/
-- delete => /chat/
+- get => v1/chat/
+- post => v1/chat/
+- patch => v1/chat/
+- delete => v1/chat/
 
 ### ChatGroupApi
 
-- get => /group/chat
-- post => /group/chat
-- patch => /group/chat
-- delete => /group/chat
+- get => v1/group/chat
+- post => v1/group/chat
+- patch => v1/group/chat
+- delete => v1/group/chat

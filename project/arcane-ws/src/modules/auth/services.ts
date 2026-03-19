@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { db, type dbType } from "../../db";
+import { db, type drizzleDB } from "../../db";
 import { usersTable } from "../../db/schemas";
 import { ResponseError } from "../../errors/customError";
 import {
@@ -11,7 +11,7 @@ import {
 } from "./model";
 
 export class AuthServices {
-  constructor(private db: dbType | any) {}
+  constructor(private db: drizzleDB | any) {}
 
   private async validateCredential(request: LoginType["reqBody"]) {
     const user = await db.query.usersTable.findFirst({
@@ -61,15 +61,15 @@ export class AuthServices {
   public async deleteSession(userId: string) {
     await this.db
       .update(usersTable)
-      .set({ token: null })
+      .set({ token: null, lastSeen: new Date() })
       .where(eq(usersTable.id, userId));
   }
 
   public async newRefreshToken(
     payload: { id: string; username: string },
-    refreshJwt: JwtSigner,
+    accessJwt: JwtSigner,
   ) {
-    const accessToken = await refreshJwt.sign(payload);
+    const accessToken = await accessJwt.sign(payload);
     return { accessToken };
   }
 }

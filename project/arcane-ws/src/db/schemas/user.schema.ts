@@ -7,7 +7,7 @@ export const usersTable = pgTable("users", {
   username: varchar({ length: 10 }).notNull(),
   password: varchar().notNull(),
   email: varchar().unique().notNull(),
-  lastSeen: timestamp().defaultNow(),
+  lastSeen: timestamp(),
   token: varchar().unique(),
   createdAt: timestamp().defaultNow(),
   updatedAt: timestamp().defaultNow(),

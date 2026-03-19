@@ -114,11 +114,12 @@ describe("AuthServices", () => {
 
       await auth.register(registerRequest);
 
-      expect(hashMock.mock.calls.length).toBe(1);
-      const hashArgs = hashMock.mock.calls[0];
-      expect(hashArgs[0]).toBe(registerRequest.password);
-      expect(hashArgs[1]).toHaveProperty("algorithm", "bcrypt");
-      expect(hashArgs[1]).toHaveProperty("cost", 10);
+      expect(hashMock.mock.calls?.length).toBe(1);
+      const hashArgs = hashMock.mock.calls?.[0];
+      expect(hashArgs).toBeDefined();
+      expect((hashArgs as any[])?.[0]).toBe(registerRequest.password);
+      expect((hashArgs as any[])?.[1]).toHaveProperty("algorithm", "bcrypt");
+      expect((hashArgs as any[])?.[1]).toHaveProperty("cost", 10);
 
       cleanup();
     });
@@ -199,7 +200,7 @@ describe("AuthServices", () => {
       }
 
       // JWT sign should NOT have been called due to validation failure
-      expect(accessJwtSignMock.mock.calls.length).toBe(0);
+      expect(accessJwtSignMock.mock.calls?.length).toBe(0);
     });
 
     it("should accept RefreshJwt with sign method", async () => {
@@ -248,7 +249,7 @@ describe("AuthServices", () => {
       const result = await auth.newRefreshToken(payload, refreshJwt);
 
       expect(result.accessToken).toBe(mockNewAccessToken);
-      expect(refreshJwt.sign.mock.calls.length).toBe(1);
+      expect(refreshJwt.sign.mock.calls?.length).toBe(1);
     });
 
     it("should accept correct payload structure", async () => {
@@ -259,7 +260,8 @@ describe("AuthServices", () => {
       const payload = { id: "user-123", username: "testuser" };
       await auth.newRefreshToken(payload, refreshJwt);
 
-      const callArg = refreshJwt.sign.mock.calls[0]?.[0];
+      const callArg = (refreshJwt.sign.mock.calls as any[][])?.[0]?.[0];
+      expect(callArg).toBeDefined();
       expect(callArg).toEqual(payload);
     });
 

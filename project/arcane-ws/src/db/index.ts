@@ -18,4 +18,4 @@ export const getDb = () => {
 
 export const db = getDb();
 
-export type dbType = typeof db;
+export type drizzleDB = typeof db;
