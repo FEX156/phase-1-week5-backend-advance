@@ -16,7 +16,7 @@ This project was created using `bun init` in bun v1.3.9. [Bun](https://bun.com) 
 
 ## TechStack
 
-Bun + Elysia, Drizzle ORM
+Bun + Elysia, Drizzle ORM, [ReactJs](https://github.com/FEX156/react-chat-app)
 
 ## Relational Diagram
 
@@ -38,16 +38,20 @@ Bun + Elysia, Drizzle ORM
 - delete => v1/users
 - get => v1/users/active
 
-### ChatApi
+### MessagesApi
 
-- get => v1/chat/
-- post => v1/chat/
-- patch => v1/chat/
-- delete => v1/chat/
+- get => v1/messages/
+- post => v1/messages/
+- patch => v1/messages/
+- delete => v1/messages/
 
-### ChatGroupApi
+### ConversationsApi
 
-- get => v1/group/chat
-- post => v1/group/chat
-- patch => v1/group/chat
-- delete => v1/group/chat
+- get => v1/conversations
+- post => v1/conversations
+- patch => v1/conversations
+- delete => v1/conversations
+
+<!-- SELECT c.* FROM Conversations c
+JOIN Participants p ON c.id = p."conversationId"
+WHERE p."userId" = '6f238a67-0092-4b6d-993a-29c419ae4efd'; -->

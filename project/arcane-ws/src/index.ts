@@ -7,7 +7,7 @@ import { wsApp } from "./modules/websocket";
 const app = new Elysia({ prefix: "v1" })
   .use(
     cors({
-      origin: "http://localhost:3000",
+      origin: "http://localhost:3001",
       credentials: true,
     }),
   )
@@ -18,7 +18,7 @@ const app = new Elysia({ prefix: "v1" })
   .listen(5000);
 
 console.log(`🚀 Server running at http://localhost:5000/v1`);
-console.log(`📚 Swagger documentation at http://localhost:5000/swagger`);
-console.log(`🔌 WebSocket endpoint at ws://localhost:5000/ws`);
+console.log(`📚 Swagger documentation at http://localhost:5000/v1/swagger`);
+console.log(`🔌 WebSocket endpoint at ws://localhost:5000/v1/ws`);
 
 export default app;

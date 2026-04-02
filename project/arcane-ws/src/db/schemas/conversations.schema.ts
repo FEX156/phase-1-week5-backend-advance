@@ -18,6 +18,8 @@ export const conversationsTable = pgTable("conversations", {
   type: typeEnum(),
   createdAt: timestamp().defaultNow(),
   updatedAt: timestamp().defaultNow(),
+  lastMessage: text(),
+  lastMessageSent: timestamp({ withTimezone: true }),
 });
 
 export const conversationsRelations = relations(

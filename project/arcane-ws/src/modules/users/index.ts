@@ -12,5 +12,4 @@ export const userController = new Elysia()
     { body: updateUser.reqBody },
   )
   .delete("/users", () => {})
-  .get("/users", () => {})
-  .get("/users/active", () => {});
+  .get("/users", () => {});

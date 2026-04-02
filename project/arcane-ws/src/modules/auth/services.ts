@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { db, type drizzleDB } from "../../db";
+import type { drizzleDB } from "../../db";
 import { usersTable } from "../../db/schemas";
 import { ResponseError } from "../../errors/customError";
 import {
@@ -14,8 +14,9 @@ export class AuthServices {
   constructor(private db: drizzleDB | any) {}
 
   private async validateCredential(request: LoginType["reqBody"]) {
-    const user = await db.query.usersTable.findFirst({
-      where: (users, { eq }) => eq(users.email, request.email),
+    const user = await this.db.query.usersTable.findFirst({
+      where: (users: any, { eq }: { eq: any }) =>
+        eq(users.email, request.email),
     });
 
     const isValid =
@@ -26,6 +27,15 @@ export class AuthServices {
     }
 
     return user;
+  }
+
+  public async ensureRefreshTokenIsExist(token: string) {
+    const result = await this.db.query.usersTable.findFirst({
+      where: (users: any, { eq }: { eq: any }) => eq(users.token, token),
+    });
+    if (!result) {
+      throw new ResponseError(401, "Invalid Credentials");
+    }
   }
 
   public async register(request: RegisterType["reqBody"]) {
