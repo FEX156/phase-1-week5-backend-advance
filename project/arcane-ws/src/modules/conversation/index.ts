@@ -6,11 +6,19 @@ import { t } from "elysia";
 
 const conversation = new ConversationServices(db);
 
-export const ConversationController = new Elysia()
+export const conversationController = new Elysia()
   .use(verifyAccess)
-  .get("/conversations", async ({ user }) => {})
+  .get("/conversations", async ({ user, set }) => {
+    const conversationList = await conversation.getConversationList(user.id);
+    set.status = 200;
+    return {
+      succes: true,
+      message: "Conversation Retrieved",
+      data: conversationList,
+    };
+  })
   .post(
-    "/conversations",
+    "/conversations/private",
     async ({ body, set, user }) => {
       const message = await conversation.newPrivateConversation(
         user.id,
@@ -26,4 +34,10 @@ export const ConversationController = new Elysia()
         message: t.String(),
       }),
     },
-  );
+  )
+  .post("/conversations/group", async () => {}, {
+    body: t.Object({
+      name: t.String(),
+      message: t.String(),
+    }),
+  });

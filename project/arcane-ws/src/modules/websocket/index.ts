@@ -52,7 +52,7 @@ export const wsApp = new Elysia().use(authCore).ws("/ws", {
 
     connectionMeta.set(ws.id, { userId });
 
-    console.log("Connected user:", userId);
+    // console.log("Connected user:", userId);
   },
 
   message(ws, message: WSMessage) {
@@ -135,7 +135,7 @@ export const wsApp = new Elysia().use(authCore).ws("/ws", {
 
     if (!meta) return;
 
-    console.log("Koneksi ditutup:", meta.userId);
+    // console.log("Koneksi ditutup:", meta.userId);
 
     // hapus dari room
     if (meta.roomId) {

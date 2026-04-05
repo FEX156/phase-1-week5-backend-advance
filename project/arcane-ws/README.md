@@ -36,20 +36,19 @@ Bun + Elysia, Drizzle ORM, [ReactJs](https://github.com/FEX156/react-chat-app)
 - get => v1/users
 - patch => v1/users
 - delete => v1/users
-- get => v1/users/active
 
 ### MessagesApi
 
-- get => v1/messages/
-- post => v1/messages/
-- patch => v1/messages/
-- delete => v1/messages/
+- get => v1/messages/:conversationId
+- post => v1/messages/:conversationId
+- patch => v1/messages/:messageId
+- delete => v1/messages/:messageId
 
 ### ConversationsApi
 
 - get => v1/conversations
-- post => v1/conversations
-- patch => v1/conversations
+- post => v1/conversations/private
+- post => v1/conversations/group
 - delete => v1/conversations
 
 <!-- SELECT c.* FROM Conversations c

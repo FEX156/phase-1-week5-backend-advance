@@ -8,6 +8,7 @@ export const statusEnum = pgEnum("status", [
   "read",
   "delivered",
   "edited",
+  "deleted",
 ]);
 
 export const messagesTable = pgTable("messages", {
