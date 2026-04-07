@@ -1,6 +1,10 @@
 import { t, Elysia } from "elysia";
 import { jwt } from "@elysiajs/jwt";
 import { ResponseError } from "../errors/customError";
+import { AuthServices } from "../modules/auth/services";
+import { db } from "../db";
+
+const Auth = new AuthServices(db);
 
 export const authCore = new Elysia({ name: "auth.core" })
   .use(
@@ -47,7 +51,7 @@ export const verifyAccess = new Elysia()
       user: { id: payload.id, username: payload.username },
     };
   });
-
+// WARNING: SECURITY ISSUE IMPLEMENT CHECK TOKEN TO DATABASE!
 export const verifyRefresh = new Elysia()
   .use(authCore)
   .derive({ as: "scoped" }, async ({ cookie: { refresh }, refreshJwt }) => {
@@ -62,6 +66,8 @@ export const verifyRefresh = new Elysia()
     if (!payload) {
       throw new ResponseError(401, "Invalid refresh token");
     }
+
+    await Auth.ensureRefreshTokenIsExist(token);
 
     return {
       refreshUser: { id: payload.id, username: payload.username },

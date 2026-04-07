@@ -8,14 +8,15 @@ export const statusEnum = pgEnum("status", [
   "read",
   "delivered",
   "edited",
+  "deleted",
 ]);
 
 export const messagesTable = pgTable("messages", {
   id: uuid().primaryKey().defaultRandom(),
   content: text(),
   status: statusEnum(),
-  createdAt: timestamp().defaultNow(),
-  updatedAt: timestamp().defaultNow(),
+  createdAt: timestamp({ withTimezone: true }).defaultNow(),
+  updatedAt: timestamp({ withTimezone: true }).defaultNow(),
   conversationId: uuid()
     .notNull()
     .references(() => conversationsTable.id),

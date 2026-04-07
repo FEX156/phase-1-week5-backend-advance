@@ -51,8 +51,15 @@ export const authController = new Elysia({ prefix: "/auth" })
   .group("/session", (app) =>
     app
       .use(verifyRefresh)
-      .post("/logout", async ({ refreshUser, set }) => {
+      .post("/logout", async ({ refreshUser, set, cookie: { refresh } }) => {
         await auth.deleteSession(refreshUser.id);
+
+        refresh?.set({
+          value: " ",
+          maxAge: 0,
+          path: "/",
+        });
+
         set.status = 200;
         return { succes: true, data: null };
       })
